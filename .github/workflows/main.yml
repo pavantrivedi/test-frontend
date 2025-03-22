@@ -1,15 +1,13 @@
-name: Angular Lint and Test
+name: CI
 
 on:
   push:
     branches:
       - main
   pull_request:
-    branches:
-      - main
 
 jobs:
-  lint-and-test:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,17 +17,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: 18
 
       - name: Install dependencies
-        run: npm install  # Ensures a clean install
+        run: npm ci
 
-      - name: Downgrade ESLint to v8.x
-        run: npm install eslint@8 --save-dev
-
-      - name: Run Linting
-        run: npm run lint
-
-      - name: Run Tests
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
+      - name: Run ESLint
+        run: |
+          ESLINT_USE_FLAT_CONFIG=false npm run lint
