@@ -22,11 +22,11 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install ESLint (compatible version)
-        run: npm install eslint@8 --save-dev
-
       - name: Install dependencies
-        run: npm install  # Uses package-lock.json for a clean install
+        run: npm install  # Ensures a clean install
+
+      - name: Downgrade ESLint to v8.x
+        run: npm install eslint@8 --save-dev
 
       - name: Run Linting
         run: npm run lint
